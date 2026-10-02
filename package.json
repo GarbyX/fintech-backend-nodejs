@@ -1,0 +1,41 @@
+{
+    "name": "fintech-backend-nodejs",
+    "version": "1.0.0",
+    "description": "A Node.js fintech backend with JWT auth, PostgreSQL transactions, Prisma ORM and Swagger documentation.",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "db:migrate": "prisma migrate dev",
+        "db:generate": "prisma generate",
+        "db:studio": "prisma studio"
+    },
+    "keywords": [
+        "nodejs",
+        "express",
+        "fintech",
+        "postgresql",
+        "prisma",
+        "jwt",
+        "swagger"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@prisma/client": "^5.10.0",
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^9.0.2",
+        "pg": "^8.11.3",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0",
+        "prisma": "^5.10.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}
