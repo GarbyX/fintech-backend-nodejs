@@ -26,4 +26,26 @@ npm run dev
 5. **Access API Docs:**
 Open `http://localhost:5000/api-docs` in your browser.
 
+Script | Command | Purpose
+
+- npm start
+node src/index.js 
+Runs the server in production mode
+
+- npm run dev
+nodemon src/index.js
+Starts server in development with auto-reloading on code changes
+
+- npm run db:migrate
+prisma migrate dev
+Applies database migrations locally
+
+- npm run db:generate
+prisma generate
+Regenerates Prisma Client types after schema updates
+
+- npm run db:studio
+prisma studio
+Opens Prisma's visual database GUI at http:/localhost:5555
+
 EOF

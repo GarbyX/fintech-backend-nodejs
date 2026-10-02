@@ -51,8 +51,3 @@ model Transaction {
   receiver    Account         @relation("Receiver", fields: [receiverId], references: [id])
   createdAt   DateTime        @default(now())
 }
-Run database migration:
-
-Bash
-npx prisma migrate dev --name init
-Step 3: Implement Database Client & A
