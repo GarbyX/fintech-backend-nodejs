@@ -14,4 +14,45 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Configure PostgreSQL Schema with Prisma
+// In financial systems, floating-point numbers (FLOAT/DOUBLE) cause rounding errors. Use Decimal for balance amounts and PostgreSQL ACID transactions for money transfers.
 
+enum TransactionType {
+  DEPOSIT
+  TRANSFER
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  accounts  Account[]
+}
+
+model Account {
+  id           String        @id @default(uuid())
+  accountNum   String        @unique
+  balance      Decimal       @default(0.00) @db.Decimal(18, 4)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  sentTx       Transaction[] @relation("Sender")
+  receivedTx   Transaction[] @relation("Receiver")
+  createdAt    DateTime      @default(now())
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  amount      Decimal         @db.Decimal(18, 4)
+  type        TransactionType
+  senderId    String?
+  sender      Account?        @relation("Sender", fields: [senderId], references: [id])
+  receiverId  String
+  receiver    Account         @relation("Receiver", fields: [receiverId], references: [id])
+  createdAt   DateTime        @default(now())
+}
+Run database migration:
+
+Bash
+npx prisma migrate dev --name init
+Step 3: Implement Database Client & A
