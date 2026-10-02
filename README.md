@@ -48,4 +48,10 @@ Regenerates Prisma Client types after schema updates
 prisma studio
 Opens Prisma's visual database GUI at http:/localhost:5555
 
+## API Documentation
+
+![Swagger API Documentation](docs/swagger-ui.png)
+
+Access the interactive OpenAPI documentation at `http://localhost:5000/api-docs` when running the service locally.
+
 EOF
