@@ -5,14 +5,14 @@ RUN apk add --no-cache openssl libc6-compat ca-certificates
 
 WORKDIR /app
 
-# 1. Copy package manifests and Prisma schema
+# 1. Copy dependency manifests first to leverage Docker layer caching
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# 2. Install production dependencies
-RUN npm ci --only=production
+# 2. Install production dependencies quietlt
+RUN npm ci --only=production --loglevel=error
 
-# 3. Copy application source code
+# 3. Copy remaining application source code
 COPY . .
 
 # 4. Generate Prisma Client

@@ -21,8 +21,25 @@ app.get('/health', async (req, res) => {
     }
 });
 
-// Documentation UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Expose raw OpenAPI JSON spec endpoint for Postman and tools
+app.get('/api-docs-json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(swaggerSpec);
+});
+
+// Swagger UI Configuration
+const swaggerUiOptions = {
+    explorer: true,
+    swaggerOptions: {
+        url: '/api-docs-json',
+        persistAuthorization: true, // Retains JWT token on page refreshes
+    },
+    customCss: '.swagger-ui .topbar { display: flex; }',
+    customSiteTitle: 'Fintech API Documentation',
+};
+
+// Mount Swagger UI — Pass swaggerSpec directly to ensure fallback rendering
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 
 // API Routes
 app.use('/api', apiRoutes);
@@ -35,13 +52,14 @@ const server = app.listen(PORT, async () => {
         console.log(`Database connected successfully.`);
         console.log(`Server running on http://localhost:${PORT}`);
         console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
+        console.log(`OpenAPI JSON Spec available at http://localhost:${PORT}/api-docs-json`);
     } catch (error) {
         console.error('Failed to connect to database:', error);
         process.exit(1);
     }
 });
 
-// Graceful Shutdown
+// Graceful Shutdown Hooks
 process.on('SIGTERM', async () => {
     console.log('SIGTERM signal received: closing HTTP server');
     server.close(async () => {
