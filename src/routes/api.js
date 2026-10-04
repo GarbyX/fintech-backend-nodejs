@@ -6,6 +6,12 @@ const auth = require('../controllers/auth.controller');
 const wallet = require('../controllers/wallet.controller');
 const verifyToken = require('../middleware/auth');
 
+const { authLimiter } = require('../middleware/rateLimiter');
+
+// attach authLimiter to sensitive routes:
+router.post('/auth/register', authLimiter, auth.register);
+router.post('/auth/login', authLimiter, auth.login);
+
 /**
  * @openapi
  * /api/auth/register:
