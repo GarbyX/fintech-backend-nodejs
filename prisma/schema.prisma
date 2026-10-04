@@ -12,6 +12,8 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  // Explicitly inform Prisma of the target operating system so it downloads the correct native binaries during build.
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
 // Configure PostgreSQL Schema with Prisma

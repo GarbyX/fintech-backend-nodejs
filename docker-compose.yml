@@ -24,6 +24,10 @@ services:
     restart: always
     ports:
       - "5001:5001"
+    env_file:
+      - .env  
+    command: >
+      sh -c "npx prisma migrate deploy && npm start"  
     environment:
       PORT: 5001
       NODE_ENV: production
